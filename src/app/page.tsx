@@ -8,9 +8,9 @@ export default function WorstCarSaleWebsiteEver() {
   const [dancingGuys, setDancingGuys] = useState<number[]>([]);
 
   useEffect(() => {
-    // Auto-create popups
+    // Auto-create popups (reduced number)
     const popupInterval = setInterval(() => {
-      if (popups.length < 15) {
+      if (popups.length < 5) {
         setPopups((prev) => [...prev, Date.now()]);
       }
     }, 2500);
@@ -46,8 +46,8 @@ export default function WorstCarSaleWebsiteEver() {
 
   const handleClick = () => {
     setClicks((prev) => prev + 1);
-    // Random popups on click
-    const randomCount = Math.floor(Math.random() * 4) + 1;
+    // Random popups on click (reduced number)
+    const randomCount = Math.floor(Math.random() * 2) + 1;
     for (let i = 0; i < randomCount; i++) {
       setPopups((prev) => [...prev, Date.now() + i]);
     }
@@ -55,11 +55,6 @@ export default function WorstCarSaleWebsiteEver() {
 
   const handleClosePopup = (id: number) => {
     setPopups((prev) => prev.filter((popupId) => popupId !== id));
-    // Create more popups when closing one
-    const randomCount = Math.floor(Math.random() * 2) + 1;
-    for (let i = 0; i < randomCount; i++) {
-      setPopups((prev) => [...prev, Date.now() + i]);
-    }
   };
 
   const handleNavClick = () => {
@@ -195,8 +190,8 @@ export default function WorstCarSaleWebsiteEver() {
             </p>
           </div>
 
-          {/* Button that does nothing */}
-          <div className="text-center mb-12">
+          {/* Buttons */}
+          <div className="text-center mb-12 space-y-6">
             <button
               onClick={handleClick}
               className="bg-red-500 text-white font-black py-6 px-12 rounded text-3xl hover:bg-green-500 transform hover:scale-125 transition-all duration-200 border-4 border-yellow-400"
@@ -207,6 +202,19 @@ export default function WorstCarSaleWebsiteEver() {
             >
               CLAIM YOUR FREE CAR NOW!
             </button>
+            
+            <a
+              href="https://t.co/228xMFhWgs"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-blue-500 text-white font-black py-4 px-8 rounded text-2xl hover:bg-purple-500 transform hover:scale-110 transition-all duration-200 border-4 border-yellow-400"
+              style={{
+                animation: "pulse 0.8s infinite",
+                boxShadow: "0 0 20px #4299e1",
+              }}
+            >
+              See Demo (lol)
+            </a>
           </div>
 
           {/* Stupidly Useful Clickbait Boxes */}
