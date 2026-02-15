@@ -187,52 +187,86 @@ export default function WorstWebsiteEver() {
             </button>
           </div>
 
-          {/* Terrible table */}
-          <div className="overflow-x-auto mb-8">
-            <table className="w-full border-collapse">
-              <thead>
-                <tr>
-                  {[1, 2, 3, 4].map((i) => (
-                    <th
-                      key={i}
-                      className="border-4 border-purple-500 p-4 text-center"
-                      style={{
-                        backgroundColor: ["yellow", "cyan", "magenta", "orange"][
-                          i % 4
-                        ],
-                        fontFamily: "Arial Black, sans-serif",
-                        fontSize: `${Math.random() * 15 + 10}px`,
-                      }}
-                    >
-                      HEADER {i}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {[1, 2, 3].map((row) => (
-                  <tr key={row}>
-                    {[1, 2, 3, 4].map((col) => (
-                      <td
-                        key={col}
-                        className="border-4 border-purple-500 p-4 text-center"
-                        style={{
-                          backgroundColor: ["pink", "lightblue", "lightgreen", "orange"][
-                            col % 4
-                          ],
-                          fontFamily: ["Comic Sans MS", "Papyrus", "Arial Black"][
-                            col % 3
-                          ],
-                          fontSize: `${Math.random() * 15 + 10}px`,
-                        }}
-                      >
-                        CELL {row}-{col}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          {/* Stupidly Useful Clickbait Boxes */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            {/* Box 1: Virus Scanner (Fake) */}
+            <div className="border-4 border-red-500 bg-yellow-100 p-6 rounded-lg hover:scale-110 transition-transform cursor-pointer"
+                 onClick={() => {
+                   alert("⚠️ VIRUS DETECTED! Click OK to remove (it's a fake)");
+                   setClicks(clicks + 10);
+                 }}>
+              <div className="text-4xl mb-2">🦠</div>
+              <h3 className="text-xl font-black text-red-700 mb-2">VIRUS SCANNER</h3>
+              <p className="text-sm font-bold text-purple-600">Click to scan your device!</p>
+              <div className="mt-2 text-xs text-green-600">✅ 1,000,000+ devices protected</div>
+            </div>
+
+            {/* Box 2: Free Money Generator (Fake) */}
+            <div className="border-4 border-green-500 bg-blue-100 p-6 rounded-lg hover:scale-110 transition-transform cursor-pointer"
+                 onClick={() => {
+                   alert("💵 CONGRATULATIONS! You won $10,000! (Just kidding)");
+                   setClicks(clicks + 5);
+                 }}>
+              <div className="text-4xl mb-2">💰</div>
+              <h3 className="text-xl font-black text-green-700 mb-2">FREE MONEY</h3>
+              <p className="text-sm font-bold text-purple-600">Click to claim your prize!</p>
+              <div className="mt-2 text-xs text-green-600">🚀 Only 3 spots left!</div>
+            </div>
+
+            {/* Box 3: IQ Test (Fake) */}
+            <div className="border-4 border-purple-500 bg-pink-100 p-6 rounded-lg hover:scale-110 transition-transform cursor-pointer"
+                 onClick={() => {
+                   const iq = Math.floor(Math.random() * 200);
+                   alert(`🧠 YOUR IQ IS ${iq}! (Totally accurate)`);
+                   setClicks(clicks + 3);
+                 }}>
+              <div className="text-4xl mb-2">🧠</div>
+              <h3 className="text-xl font-black text-purple-700 mb-2">IQ TEST</h3>
+              <p className="text-sm font-bold text-purple-600">Click to test your IQ!</p>
+              <div className="mt-2 text-xs text-green-600">📈 98% accuracy rating</div>
+            </div>
+
+            {/* Box 4: Secret Message (Fake) */}
+            <div className="border-4 border-orange-500 bg-cyan-100 p-6 rounded-lg hover:scale-110 transition-transform cursor-pointer"
+                 onClick={() => {
+                   const messages = [
+                     "🤫 THE SECRET IS: Click more buttons!",
+                     "🤫 THE SECRET IS: This is all fake!",
+                     "🤫 THE SECRET IS: You're wasting time!",
+                     "🤫 THE SECRET IS: I told you it's fake!"
+                   ];
+                   alert(messages[Math.floor(Math.random() * messages.length)]);
+                   setClicks(clicks + 1);
+                 }}>
+              <div className="text-4xl mb-2">🤫</div>
+              <h3 className="text-xl font-black text-orange-700 mb-2">SECRET CODE</h3>
+              <p className="text-sm font-bold text-purple-600">Click to reveal secret!</p>
+              <div className="mt-2 text-xs text-green-600">🔒 Top secret information</div>
+            </div>
+          </div>
+
+          {/* More Clickbait Content */}
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-black text-purple-700 mb-4"
+                style={{ fontFamily: "Papyrus, fantasy", textShadow: "2px 2px 0px yellow" }}>
+              YOU WON'T BELIEVE WHAT HAPPENS NEXT! 👀
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                { emoji: "🎬", text: "Watch This Video (It's 10 Hours Long!)" },
+                { emoji: "📦", text: "FREE GIFT CARD! (Just Click Here)" },
+                { emoji: "🚨", text: "URGENT! Your Computer Is At Risk!" }
+              ].map((item, index) => (
+                <div key={index} className="bg-gradient-to-r from-red-400 to-purple-600 p-4 rounded-lg text-white cursor-pointer hover:scale-105 transition-transform"
+                     onClick={() => {
+                       alert(`🔥 ${item.emoji} ${item.text} (Fake Alert!)`);
+                       setClicks(clicks + 2);
+                     }}>
+                  <div className="text-3xl mb-2">{item.emoji}</div>
+                  <p className="font-bold text-sm">{item.text}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Annoying popup windows */}
