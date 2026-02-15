@@ -107,7 +107,7 @@ export default function WorstWebsiteEver() {
               fontFamily: ["Comic Sans MS", "Arial Black", "Papyrus"][
                 i % 3
               ],
-              fontSize: `${Math.random() * 20 + 10}px`,
+              fontSize: `${[12, 18, 14, 20, 16, 15][i % 6]}px`,
             }}
           >
             {["?", "✨", "🚀", "🎁", "🎯", "🤔"][i % 6]}
