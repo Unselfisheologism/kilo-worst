@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export default function WorstCarSaleWebsiteEver() {
   const [clicks, setClicks] = useState(0);
   const [popups, setPopups] = useState<number[]>([]);
   const [dancingGuys, setDancingGuys] = useState<number[]>([]);
+  const [audioPlaying, setAudioPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     // Auto-create popups (reduced number)
@@ -57,15 +59,35 @@ export default function WorstCarSaleWebsiteEver() {
     setPopups((prev) => prev.filter((popupId) => popupId !== id));
   };
 
-  const handleNavClick = () => {
-    const messages = [
-      "🚗 CAR SALE!!!",
-      "💸 DISCOUNT 99% OFF!!!",
-      "🔥 LIMITED TIME ONLY!!!",
-      "🎉 FREE GIFT WITH PURCHASE!!!",
-      "👨‍💼 TALK TO OUR SALESMAN!!!",
-    ];
-    alert(messages[Math.floor(Math.random() * messages.length)]);
+  const toggleAudio = () => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio('https://res.cloudinary.com/ddz3nsnq1/video/upload/v1771204582/freesound_community-just-a-dream-82893_nbjh6g.mp3');
+      audioRef.current.loop = true;
+    }
+
+    if (audioPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play().catch((error) => {
+        console.error('Audio playback failed:', error);
+      });
+    }
+    setAudioPlaying(!audioPlaying);
+  };
+
+  const handleNavClick = (index: number) => {
+    if (index === 3 || index === 4) { // SALES or CALL buttons
+      toggleAudio();
+    } else {
+      const messages = [
+        "🚗 CAR SALE!!!",
+        "💸 DISCOUNT 99% OFF!!!",
+        "🔥 LIMITED TIME ONLY!!!",
+        "🎉 FREE GIFT WITH PURCHASE!!!",
+        "👨‍💼 TALK TO OUR SALESMAN!!!",
+      ];
+      alert(messages[Math.floor(Math.random() * messages.length)]);
+    }
   };
 
   return (
@@ -91,22 +113,75 @@ export default function WorstCarSaleWebsiteEver() {
 
       {/* Windows 95 style navigation */}
       <nav className="grid grid-cols-4 gap-2 p-4 bg-gray-300 border-t-2 border-gray-500">
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-          <button
-            key={i}
-            onClick={handleNavClick}
-            className="bg-gray-200 text-black font-bold py-3 px-2 rounded border-2 border-gray-600 hover:bg-blue-300 transform hover:scale-110 transition-transform duration-200"
-            style={{
-              fontFamily: ["Comic Sans MS", "Arial Black", "Papyrus", "Impact"][
-                i % 4
-              ],
-              fontSize: `${[14, 18, 16, 20, 15, 17, 13, 19][i % 8]}px`,
-              color: ["red", "blue", "green", "purple", "orange", "pink", "yellow", "black"][i % 8],
-            }}
-          >
-            {["🚗 CARS", "💰 DEALS", "🎁 GIFTS", "👨‍💼 SALES", "📞 CALL", "📍 LOCATION", "⭐ REVIEWS", "🔥 HOT"][i % 8]}
-          </button>
-        ))}
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => {
+          const text = ["🚗 CARS", "💰 DEALS", "🎁 GIFTS", "👨‍💼 SALES", "📞 CALL", "📍 LOCATION", "⭐ REVIEWS", "🔥 HOT"][i % 8];
+          
+          if (i % 8 === 2) { // GIFTS button (index 3 in array, i starts at 1)
+            return (
+              <a
+                key={i}
+                href="https://stake.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gray-200 text-black font-bold py-3 px-2 rounded border-2 border-gray-600 hover:bg-blue-300 transform hover:scale-110 transition-transform duration-200"
+                style={{
+                  fontFamily: ["Comic Sans MS", "Arial Black", "Papyrus", "Impact"][i % 4],
+                  fontSize: `${[14, 18, 16, 20, 15, 17, 13, 19][i % 8]}px`,
+                  color: ["red", "blue", "green", "purple", "orange", "pink", "yellow", "black"][i % 8],
+                }}
+              >
+                {text}
+              </a>
+            );
+          } else if (i % 8 === 5) { // LOCATION button (index 6 in array)
+            return (
+              <a
+                key={i}
+                href={`https://www.google.com/maps?q=4.8967,-154.9127`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gray-200 text-black font-bold py-3 px-2 rounded border-2 border-gray-600 hover:bg-blue-300 transform hover:scale-110 transition-transform duration-200"
+                style={{
+                  fontFamily: ["Comic Sans MS", "Arial Black", "Papyrus", "Impact"][i % 4],
+                  fontSize: `${[14, 18, 16, 20, 15, 17, 13, 19][i % 8]}px`,
+                  color: ["red", "blue", "green", "purple", "orange", "pink", "yellow", "black"][i % 8],
+                }}
+              >
+                {text}
+              </a>
+            );
+          } else if (i % 8 === 3 || i % 8 === 4) { // SALES or CALL buttons
+            return (
+              <button
+                key={i}
+                onClick={() => handleNavClick(i % 8)}
+                className={`bg-gray-200 text-black font-bold py-3 px-2 rounded border-2 border-gray-600 hover:bg-blue-300 transform hover:scale-110 transition-transform duration-200 ${audioPlaying ? 'bg-yellow-300' : ''}`}
+                style={{
+                  fontFamily: ["Comic Sans MS", "Arial Black", "Papyrus", "Impact"][i % 4],
+                  fontSize: `${[14, 18, 16, 20, 15, 17, 13, 19][i % 8]}px`,
+                  color: ["red", "blue", "green", "purple", "orange", "pink", "yellow", "black"][i % 8],
+                }}
+              >
+                {text} {audioPlaying ? '🔊' : ''}
+              </button>
+            );
+          } else {
+            return (
+              <button
+                key={i}
+                onClick={() => handleNavClick(i % 8)}
+                className="bg-gray-200 text-black font-bold py-3 px-2 rounded border-2 border-gray-600 hover:bg-blue-300 transform hover:scale-110 transition-transform duration-200"
+                style={{
+                  fontFamily: ["Comic Sans MS", "Arial Black", "Papyrus", "Impact"][i % 4],
+                  fontSize: `${[14, 18, 16, 20, 15, 17, 13, 19][i % 8]}px`,
+                  color: ["red", "blue", "green", "purple", "orange", "pink", "yellow", "black"][i % 8],
+                }}
+              >
+                {text}
+              </button>
+            );
+          }
+        })}
       </nav>
 
       {/* Main content */}
@@ -143,7 +218,7 @@ export default function WorstCarSaleWebsiteEver() {
                 animation: "blink 0.4s infinite",
               }}
             >
-              MOCHI MOCHI DANCING GUY SAYS: "BUY NOW!!!"
+              MOCHI MOCHI DANCING GUY SAYS: &quot;BUY NOW!!!&quot;
             </p>
           </div>
 
@@ -220,26 +295,28 @@ export default function WorstCarSaleWebsiteEver() {
           {/* Stupidly Useful Clickbait Boxes */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {/* Box 1: Free Gift */}
-            <div className="border-4 border-green-500 bg-blue-100 p-6 rounded-lg hover:scale-110 transition-transform cursor-pointer"
-                 onClick={() => {
-                   alert("🎁 CONGRATULATIONS! You won a free toaster! (Just pay $99.99 shipping)");
-                   setClicks(clicks + 5);
-                 }}>
+            <a
+              href="https://stake.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-4 border-green-500 bg-blue-100 p-6 rounded-lg hover:scale-110 transition-transform cursor-pointer block"
+            >
               <div className="text-5xl mb-3">🎁</div>
               <h3 className="text-2xl font-black text-green-700 mb-2">FREE GIFT!</h3>
               <p className="text-sm font-bold text-purple-600">Click to claim your free prize!</p>
-            </div>
+            </a>
 
             {/* Box 2: Secret Deal */}
-            <div className="border-4 border-purple-500 bg-pink-100 p-6 rounded-lg hover:scale-110 transition-transform cursor-pointer"
-                 onClick={() => {
-                   alert("🔒 SECRET DEAL: 99.9% off! But you have to act in 0.1 seconds!");
-                   setClicks(clicks + 10);
-                 }}>
+            <a
+              href="https://freebitco.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-4 border-purple-500 bg-pink-100 p-6 rounded-lg hover:scale-110 transition-transform cursor-pointer block"
+            >
               <div className="text-5xl mb-3">🔒</div>
               <h3 className="text-2xl font-black text-purple-700 mb-2">SECRET DEAL!</h3>
               <p className="text-sm font-bold text-red-600">Click to reveal secret price!</p>
-            </div>
+            </a>
 
             {/* Box 3: Virus Scanner */}
             <div className="border-4 border-red-500 bg-yellow-100 p-6 rounded-lg hover:scale-110 transition-transform cursor-pointer"
