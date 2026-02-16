@@ -7,6 +7,7 @@ export default function WorstCarSaleWebsiteEver() {
   const [popups, setPopups] = useState<number[]>([]);
   const [dancingGuys, setDancingGuys] = useState<number[]>([]);
   const [audioPlaying, setAudioPlaying] = useState(false);
+  const [showCarImage, setShowCarImage] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -78,6 +79,12 @@ export default function WorstCarSaleWebsiteEver() {
   const handleNavClick = (index: number) => {
     if (index === 3 || index === 4) { // SALES or CALL buttons
       toggleAudio();
+    } else if (index === 7) { // HOT button
+      // Do nothing - already a link
+    } else if (index === 6) { // REVIEWS button
+      alert("Just view this page again.");
+    } else if (index === 0) { // CARS button
+      setShowCarImage(!showCarImage);
     } else {
       const messages = [
         "🚗 CAR SALE!!!",
@@ -150,6 +157,23 @@ export default function WorstCarSaleWebsiteEver() {
                 {text}
               </a>
             );
+          } else if (i % 8 === 7) { // HOT button (index 8 in array)
+            return (
+              <a
+                key={i}
+                href="https://www.coingecko.com/en/highlights/trending-crypto"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gray-200 text-black font-bold py-3 px-2 rounded border-2 border-gray-600 hover:bg-blue-300 transform hover:scale-110 transition-transform duration-200"
+                style={{
+                  fontFamily: ["Comic Sans MS", "Arial Black", "Papyrus", "Impact"][i % 4],
+                  fontSize: `${[14, 18, 16, 20, 15, 17, 13, 19][i % 8]}px`,
+                  color: ["red", "blue", "green", "purple", "orange", "pink", "yellow", "black"][i % 8],
+                }}
+              >
+                {text}
+              </a>
+            );
           } else if (i % 8 === 3 || i % 8 === 4) { // SALES or CALL buttons
             return (
               <button
@@ -183,6 +207,25 @@ export default function WorstCarSaleWebsiteEver() {
           }
         })}
       </nav>
+
+      {/* Car Image Display */}
+      {showCarImage && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+          <div className="relative">
+            <button
+              onClick={() => setShowCarImage(false)}
+              className="absolute -top-10 -right-10 bg-red-500 text-white font-bold py-2 px-4 rounded-full hover:bg-red-700 transition-colors"
+            >
+              X
+            </button>
+            <img
+              src="https://res.cloudinary.com/ddz3nsnq1/image/upload/v1771205778/1937-oldsmobile-ad-simple-as-abc-to-pick-a-good-used-car-2Y7CPMX_txwbdt.jpg"
+              alt="1937 Oldsmobile Ad"
+              className="max-w-4xl max-h-[80vh] rounded-lg shadow-2xl"
+            />
+          </div>
+        </div>
+      )}
 
       {/* Main content */}
       <main className="p-8">
