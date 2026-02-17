@@ -144,7 +144,7 @@ export default function WorstCarSaleWebsiteEver() {
             return (
               <a
                 key={i}
-                href={`https://www.google.com/maps?q=4.8967,-154.9127`}
+                href={`https://earth.google.com/web/@4.8967,-154.9127,30000000m/data=KAI`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gray-200 text-black font-bold py-3 px-2 rounded border-2 border-gray-600 hover:bg-blue-300 transform hover:scale-110 transition-transform duration-200"
